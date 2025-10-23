@@ -1,0 +1,14 @@
+# Ignore EVERYTHING!
+*
+
+# src directory
+!/src/**
+!/src
+
+# misc files
+!.gitignore
+!LICENSE
+!package-lock.json
+!package.json
+!README.md
+!tsconfig.json

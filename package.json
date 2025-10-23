@@ -1,0 +1,11 @@
+{
+  "name": "command-wrapper",
+  "version": "0.1.0",
+  "dependencies": {
+    "@minecraft/server": "^2.2.0",
+    "@minecraft/server-ui": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
