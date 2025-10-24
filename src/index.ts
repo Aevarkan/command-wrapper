@@ -15,3 +15,4 @@
  */
 
 export * from "./types/CustomCommands"
+export { CommandRegister } from "./classes/CommandRegister"
