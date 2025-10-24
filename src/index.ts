@@ -14,3 +14,4 @@
  * Project: command-wrapper
  */
 
+export * from "./types/CustomCommands"
