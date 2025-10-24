@@ -17,7 +17,7 @@
 
 import { BlockType, CommandPermissionLevel, CustomCommandOrigin, CustomCommandParamType, Entity, EntityType, ItemType, Player, Vector3 } from "@minecraft/server";
 
-export interface CommandInfo {
+export interface CommandInfo<P extends CommandParameterInfo[] = CommandParameterInfo[]> {
     /**
      * The callback function the command should run.
      * @remarks This function should throw an error or return false to indicate command failure.
@@ -25,7 +25,7 @@ export interface CommandInfo {
      * @remarks Callbacks happen in read-only mode.
      * 
      */
-    callbackFunction: (origin: CustomCommandOrigin, ...args: any[]) => void | boolean
+    callbackFunction: CommandCallback<P>
     /**
      * @remarks
      * Message displayed to chat after successful command execution.
@@ -71,7 +71,7 @@ export interface CommandInfo {
      * List of command parameters.
      *
      */
-    parameters?: CommandParameterInfo[]
+    parameters?: P
 }
 
 type CommandParameterArgumentMap<T extends CommandParameterInfo> =
@@ -88,14 +88,17 @@ type CommandParameterArgumentMap<T extends CommandParameterInfo> =
     T['type'] extends CustomCommandParamType.String ? string :
     unknown;
 
-export type CommandParameterMap<T extends CommandParameterInfo[]> = {
+type CommandParameterMap<T extends CommandParameterInfo[]> = {
   [K in keyof T]: T[K] extends CommandParameterInfo ? CommandParameterArgumentMap<T[K]> : never;
 };
+
+type CommandCallback<P extends CommandParameterInfo[]> =
+    (origin: CustomCommandOrigin, ...args: CommandParameterMap<P>) => void | boolean;
 
 /**
  * Information of the command parameter.
  */
-export type CommandParameterInfo = CommandParameterInfoGeneric | CommandParameterInfoEnum
+export type CommandParameterInfo = CommandParameterInfoGeneric<any> | CommandParameterInfoEnum
 
 interface CommandParameterInfoBase {
     /**
@@ -111,13 +114,13 @@ interface CommandParameterInfoBase {
     mandatory: boolean
 }
 
-export interface CommandParameterInfoGeneric extends CommandParameterInfoBase {
+export interface CommandParameterInfoGeneric<T extends Exclude<CustomCommandParamType, CustomCommandParamType.Enum>> extends CommandParameterInfoBase {
     /**
      * @remarks
      * The data type of the parameter.
      *
      */
-    type: Exclude<CustomCommandParamType, CustomCommandParamType.Enum>
+    type: T
     values?: never
 }
 

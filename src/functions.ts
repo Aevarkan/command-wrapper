@@ -15,7 +15,7 @@
  */
 
 import { CustomCommandParamType } from "@minecraft/server";
-import { CommandParameterInfo, CommandParameterInfoEnum, CommandParameterInfoGeneric } from "types/CustomCommands";
+import { CommandInfo, CommandParameterInfo, CommandParameterInfoEnum, CommandParameterInfoGeneric } from "types/CustomCommands";
 
 /**
  * Defines an `Enum` command parameter.
@@ -29,12 +29,19 @@ export function createParameter<V extends readonly string[]>(
  * Defines a generic custom command parameter. 
  * @param param The command parameter object.
  */
-export function createParameter(
-  param: CommandParameterInfoGeneric
-): CommandParameterInfoGeneric;
+export function createParameter<T extends Exclude<CustomCommandParamType, CustomCommandParamType.Enum>>(
+  param: CommandParameterInfoGeneric<T>
+): CommandParameterInfoGeneric<T>;
 
 export function createParameter<
   P extends CommandParameterInfo
 >(param: P): P {
   return param
+}
+
+
+export function createCommand<const P extends CommandParameterInfo[]>(
+    command: CommandInfo<P>
+): CommandInfo<P> {
+    return command;
 }
