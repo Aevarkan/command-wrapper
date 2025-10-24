@@ -62,7 +62,8 @@ export class CommandRegister {
                 const enumParameters = command.parameters?.filter(p => p.type === CustomCommandParamType.Enum)
                 enumParameters?.forEach(enumParameter => {
                     const namespacedEnumName = this.commandNamespacePrefix + ":" + enumParameter.name
-                    commandRegistry.registerEnum(namespacedEnumName, enumParameter.values)
+                    // Spreading to suppress readonly error. This is only a TypeScript error.
+                    commandRegistry.registerEnum(namespacedEnumName, [...enumParameter.values])
                 })
 
                 const namespacedName = this.commandNamespacePrefix + ":" + command.name
