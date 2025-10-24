@@ -88,10 +88,9 @@ type CommandParameterArgumentMap<T extends CommandParameterInfo> =
     T['type'] extends CustomCommandParamType.String ? string :
     unknown;
 
-export type CommandParameterMap<T extends readonly CommandParameterInfo[]> = {
+export type CommandParameterMap<T extends CommandParameterInfo[]> = {
   [K in keyof T]: T[K] extends CommandParameterInfo ? CommandParameterArgumentMap<T[K]> : never;
 };
-
 
 /**
  * Information of the command parameter.
@@ -119,9 +118,10 @@ export interface CommandParameterInfoGeneric extends CommandParameterInfoBase {
      *
      */
     type: Exclude<CustomCommandParamType, CustomCommandParamType.Enum>
+    values?: never
 }
 
-export interface CommandParameterInfoEnum extends CommandParameterInfoBase {
+export interface CommandParameterInfoEnum<V extends readonly string[] = readonly string[]> extends CommandParameterInfoBase {
     /**
      * @remarks
      * The data type of the parameter.
@@ -132,5 +132,5 @@ export interface CommandParameterInfoEnum extends CommandParameterInfoBase {
      * @remarks
      * Values that the enum expects.
      */
-    values: readonly string[]
+    values: V
 }
