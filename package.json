@@ -1,15 +1,29 @@
 {
   "name": "command-wrapper",
   "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aevarkan/command-wrapper.git"
+  },
   "scripts": {
     "test:types": "tsc --noEmit",
-    "test": "npm run test:types && vitest"
+    "test": "npm run test:types && vitest",
+    "build": "tsdown"
+  },
+  "files": ["dist"],
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs"
+    }
   },
   "dependencies": {
     "@minecraft/server": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
+    "tsdown": "^0.15.9",
     "typescript": "^5.9.3",
     "vitest": "^4.0.3"
   }

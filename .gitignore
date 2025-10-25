@@ -11,6 +11,7 @@
 !vitest.config.ts
 
 # misc files
+!tsdown.config.ts
 !.gitignore
 !LICENSE
 !package-lock.json
