@@ -22,7 +22,7 @@ import { CommandInfo, CommandParameterInfo, CommandParameterInfoEnum, CommandPar
  * @param param The command parameter object.
  */
 export function createParameter<V extends readonly string[]>(
-  param: CommandParameterInfoEnum<V>
+    param: CommandParameterInfoEnum<V>
 ): CommandParameterInfoEnum<V>;
 
 /**
@@ -30,18 +30,33 @@ export function createParameter<V extends readonly string[]>(
  * @param param The command parameter object.
  */
 export function createParameter<T extends Exclude<CustomCommandParamType, CustomCommandParamType.Enum>>(
-  param: CommandParameterInfoGeneric<T>
+    param: CommandParameterInfoGeneric<T>
 ): CommandParameterInfoGeneric<T>;
 
 export function createParameter<
-  P extends CommandParameterInfo
+    P extends CommandParameterInfo
 >(param: P): P {
-  return param
+    return param
 }
 
 
 export function createCommand<const P extends CommandParameterInfo[]>(
     command: CommandInfo<P>
 ): CommandInfo<P> {
+    const params = command.parameters ?? [];
+
+    // Find first optional parameter
+    const firstOptionalIndex = params.findIndex(p => !p.mandatory);
+
+    // Runtime error because I cannot be bothered to make a compile time error
+    // You only see the error once anyway. After that, you should know ;)
+    if (firstOptionalIndex !== -1) {
+        // Check if there are any mandatory after it
+        const invalid = params.slice(firstOptionalIndex).some(p => p.mandatory);
+        if (invalid) {
+            throw new Error("command-wrapper error: mandatory parameters must appear before optional parameters.")
+        }
+    }
+    
     return command;
 }
