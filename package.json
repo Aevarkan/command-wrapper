@@ -6,8 +6,7 @@
     "test": "npm run test:types && vitest"
   },
   "dependencies": {
-    "@minecraft/server": "^2.2.0",
-    "@minecraft/server-ui": "^2.0.0"
+    "@minecraft/server": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
