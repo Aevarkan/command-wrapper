@@ -25,6 +25,15 @@ export class CommandRegister {
     private commandNamespacePrefix: string
     private commandsToRegister: CommandInfo[] = []
 
+    /**
+     * The command register instance.
+     * @param namespace The namespace that will be prefixed onto registered commands.
+     * @param defaultPermissionLevel The permission level required to call registered commands. Overriden by individual command properties.
+     * @param cheatsRequired Whether commands will require cheats to run. Overriden by individual command properties.
+     * 
+     * @remarks
+     * This should be created in the global scope, and during early execution.
+     */
     public constructor(namespace: string, defaultPermissionLevel?: CommandPermissionLevel, cheatsRequired?: boolean) {
         this.commandNamespacePrefix = namespace
         this.defaultPermissionLevel = defaultPermissionLevel ?? CommandPermissionLevel.GameDirectors
@@ -39,10 +48,6 @@ export class CommandRegister {
     public registerCommand<const P extends CommandParameterInfo[]>(commandInfo: CommandInfo<P>) {
         this.commandsToRegister.push(commandInfo as CommandInfo<CommandParameterInfo[]>)
     }
-    // public static getCommands() {
-    //     return this.commandsToRegister
-    // }
-
 
     /**
      * Registers all custom commands.
