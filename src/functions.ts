@@ -21,7 +21,7 @@ import { CommandInfo, CommandParameterInfo, CommandParameterInfoEnum, CommandPar
  * Defines an `Enum` command parameter.
  * @param param The command parameter object.
  */
-export function createParameter<V extends readonly string[]>(
+export function defineParameter<V extends readonly string[]>(
     param: CommandParameterInfoEnum<V>
 ): CommandParameterInfoEnum<V>;
 
@@ -29,18 +29,18 @@ export function createParameter<V extends readonly string[]>(
  * Defines a generic custom command parameter. 
  * @param param The command parameter object.
  */
-export function createParameter<T extends Exclude<CustomCommandParamType, CustomCommandParamType.Enum>>(
+export function defineParameter<T extends Exclude<CustomCommandParamType, CustomCommandParamType.Enum>>(
     param: CommandParameterInfoGeneric<T>
 ): CommandParameterInfoGeneric<T>;
 
-export function createParameter<
+export function defineParameter<
     P extends CommandParameterInfo
 >(param: P): P {
     return param
 }
 
 
-export function createCommand<const P extends CommandParameterInfo[]>(
+export function defineCommand<const P extends CommandParameterInfo[]>(
     command: CommandInfo<P>
 ): CommandInfo<P> {
     const params = command.parameters ?? [];
