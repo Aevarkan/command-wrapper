@@ -29,6 +29,7 @@ export class CommandRegister {
         this.commandNamespacePrefix = namespace
         this.defaultPermissionLevel = defaultPermissionLevel ?? CommandPermissionLevel.GameDirectors
         this.cheatsRequired = cheatsRequired ?? true
+        this._registerCommands()
     }
 
     /**
@@ -51,7 +52,7 @@ export class CommandRegister {
      * @internal
      * This should only be run in main after all commands are registered.
      */
-    public _registerCommands() {
+    private _registerCommands() {
         system.beforeEvents.startup.subscribe(event => {
             const commandRegistry = event.customCommandRegistry
 
