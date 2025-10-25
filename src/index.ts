@@ -14,6 +14,6 @@
  * Project: command-wrapper
  */
 
-export * from "./types/CustomCommands"
-export { CommandRegister } from "./classes/CommandRegister"
+export * from "./types"
+export { CommandRegister } from "./CommandRegister"
 export { defineCommand, defineParameter } from "./functions"

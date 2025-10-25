@@ -15,7 +15,7 @@
  */
 
 import { CustomCommandParamType } from "@minecraft/server";
-import { CommandInfo, CommandParameterInfo, CommandParameterInfoEnum, CommandParameterInfoGeneric } from "types/CustomCommands";
+import { CommandInfo, CommandParameterInfo, CommandParameterInfoEnum, CommandParameterInfoGeneric } from "types";
 
 /**
  * Defines an `Enum` command parameter.

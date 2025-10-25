@@ -15,7 +15,7 @@
  */
 
 import { CommandPermissionLevel, CustomCommand, CustomCommandOrigin, CustomCommandParamType, CustomCommandResult, CustomCommandStatus, system } from "@minecraft/server"
-import { CommandInfo } from "types/CustomCommands"
+import { CommandInfo } from "types"
 
 export class CommandRegister {
 
