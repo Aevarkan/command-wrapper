@@ -15,7 +15,7 @@
  */
 
 import { CommandPermissionLevel, CustomCommand, CustomCommandOrigin, CustomCommandParamType, CustomCommandResult, CustomCommandStatus, system } from "@minecraft/server"
-import { CommandInfo } from "types"
+import { CommandInfo, CommandParameterInfo } from "types"
 
 export class CommandRegister {
 
@@ -36,11 +36,9 @@ export class CommandRegister {
      * Register a new command.
      * @param commandInfo The command info object.
      */
-    public registerCommand(commandInfo: CommandInfo) {
-
-        this.commandsToRegister.push(commandInfo)
+    public registerCommand<const P extends CommandParameterInfo[]>(commandInfo: CommandInfo<P>) {
+        this.commandsToRegister.push(commandInfo as CommandInfo<CommandParameterInfo[]>)
     }
-
     // public static getCommands() {
     //     return this.commandsToRegister
     // }
