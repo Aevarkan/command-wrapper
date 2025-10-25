@@ -1,11 +1,17 @@
 {
   "name": "command-wrapper",
   "version": "0.1.0",
+  "scripts": {
+    "test:types": "tsc --noEmit",
+    "test": "npm run test:types && vitest"
+  },
   "dependencies": {
     "@minecraft/server": "^2.2.0",
     "@minecraft/server-ui": "^2.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "@types/node": "^24.9.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.3"
   }
 }

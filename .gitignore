@@ -5,6 +5,11 @@
 !/src/**
 !/src
 
+# tests
+!/tests
+!/tests/**
+!vitest.config.ts
+
 # misc files
 !.gitignore
 !LICENSE
