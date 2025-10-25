@@ -19,7 +19,8 @@
   "scripts": {
     "test:types": "tsc --noEmit",
     "test": "npm run test:types && vitest",
-    "build": "tsdown"
+    "build": "tsdown",
+    "prepack": "npm run build"
   },
   "dependencies": {
     "@minecraft/server": "^2.2.0"
