@@ -78,13 +78,25 @@ export class CommandRegister {
                 const permissionLevel = command.permissionLevel ?? this.defaultPermissionLevel
                 const cheatsRequired = command.cheatsRequired ?? this.cheatsRequired
 
+                // add the prefix to enum parameters
+                const correctedParameters = command.parameters?.map(parameter => {
+                    if (parameter.type === CustomCommandParamType.Enum) {
+                        return {
+                            ...parameter,
+                            name: `${this.commandNamespacePrefix}:${parameter.name}`
+                        }
+                    } else {
+                        return parameter
+                    }
+                })
+
                 const customCommand: CustomCommand = {
                     name: namespacedName,
                     description: command.description,
                     permissionLevel: permissionLevel,
                     cheatsRequired: cheatsRequired,
-                    mandatoryParameters: command.parameters?.filter(p => p.mandatory),
-                    optionalParameters: command.parameters?.filter(p => !p.mandatory)
+                    mandatoryParameters: correctedParameters?.filter(p => p.mandatory),
+                    optionalParameters: correctedParameters?.filter(p => !p.mandatory)
                 }
 
                 function callbackWrapper(origin: CustomCommandOrigin, ...args: any[]): CustomCommandResult {
