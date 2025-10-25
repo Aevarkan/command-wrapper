@@ -64,7 +64,7 @@ export class CommandRegister {
                     const namespacedEnumName = this.commandNamespacePrefix + ":" + enumParameter.name
                     // Spreading to suppress readonly error. This is only a TypeScript error.
                     if (!enumParameter.values) {
-                        throw new Error("command-wrapper: enum parameter needs to have values!")
+                        throw new Error("command-wrapper error: enum parameter needs to have values!")
                     }
                     commandRegistry.registerEnum(namespacedEnumName, [...enumParameter.values])
                 })
