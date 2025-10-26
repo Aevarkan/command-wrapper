@@ -58,7 +58,9 @@ export class CommandRegister {
     private _registerCommands() {
         system.beforeEvents.startup.subscribe(event => {
             const commandRegistry = event.customCommandRegistry
-
+            // duplicate enum check
+            const registeredEnums = new Set<string>()
+ 
             // Register each command put in the register
             this.commandsToRegister.forEach(command => {
 
@@ -66,9 +68,16 @@ export class CommandRegister {
                 const enumParameters = command.parameters?.filter(p => p.type === CustomCommandParamType.Enum)
                 enumParameters?.forEach(enumParameter => {
                     const namespacedEnumName = this.commandNamespacePrefix + ":" + enumParameter.name
+                    const isDuplicateEnum = registeredEnums.has(namespacedEnumName)
+                    if (isDuplicateEnum) {
+                        console.warn("command-wrapper: duplicate enum was not registered: " + JSON.stringify(enumParameter) + " \n\tEnsure this is intentional!")
+                        return
+                    }
+
+                    registeredEnums.add(namespacedEnumName)
                     // Spreading to suppress readonly error. This is only a TypeScript error.
                     if (!enumParameter.values) {
-                        throw new Error("command-wrapper error: enum parameter needs to have values!")
+                        throw new Error("[ERROR] command-wrapper: enum parameter needs to have values! Enum " + JSON.stringify(enumParameter))
                     }
                     commandRegistry.registerEnum(namespacedEnumName, [...enumParameter.values])
                 })
