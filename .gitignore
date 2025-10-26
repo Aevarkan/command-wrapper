@@ -10,6 +10,10 @@
 !/tests/**
 !vitest.config.ts
 
+# github workflows
+!/.github
+!/.github/**
+
 # misc files
 !tsdown.config.ts
 !.gitignore
