@@ -17,6 +17,8 @@
 import { CommandPermissionLevel, CustomCommand, CustomCommandOrigin, CustomCommandParamType, CustomCommandResult, CustomCommandStatus, system } from "@minecraft/server"
 import { CommandInfo, CommandParameterInfo } from "./types"
 
+let instanceCreated = false
+
 export class CommandRegister {
 
     private defaultPermissionLevel: CommandPermissionLevel
@@ -26,15 +28,24 @@ export class CommandRegister {
     private commandsToRegister: CommandInfo[] = []
 
     /**
-     * The command register instance.
+     * The command register instance. Only one instance can be created.
      * @param namespace The namespace that will be prefixed onto registered commands.
      * @param defaultPermissionLevel The permission level required to call registered commands. Overriden by individual command properties.
      * @param cheatsRequired Whether commands will require cheats to run. Overriden by individual command properties.
      * 
      * @remarks
      * This should be created in the global scope, and during early execution.
+     * 
+     * @throws
+     * Throws if multiple instances are created.
      */
     public constructor(namespace: string, defaultPermissionLevel?: CommandPermissionLevel, cheatsRequired?: boolean) {
+        // ONLY ONE ALLOWED
+        if (instanceCreated) {
+            throw new Error("[ERROR] command-wrapper: only one CommandRegister instance can be created!")
+        }
+        instanceCreated = true
+
         this.commandNamespacePrefix = namespace
         this.defaultPermissionLevel = defaultPermissionLevel ?? CommandPermissionLevel.GameDirectors
         this.cheatsRequired = cheatsRequired ?? true
