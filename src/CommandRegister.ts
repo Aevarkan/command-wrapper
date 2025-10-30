@@ -23,15 +23,28 @@ export class CommandRegister {
 
     private defaultPermissionLevel: CommandPermissionLevel
     private cheatsRequired: boolean
+    private suppressWarnings: boolean
 
     private commandNamespacePrefix: string
     private commandsToRegister: CommandInfo[] = []
 
     /**
      * The command register instance. Only one instance can be created.
-     * @param namespace The namespace that will be prefixed onto registered commands.
-     * @param defaultPermissionLevel The permission level required to call registered commands. Overriden by individual command properties.
-     * @param cheatsRequired Whether commands will require cheats to run. Overriden by individual command properties.
+     * 
+     * @param namespace
+     * The namespace that will be prefixed onto registered commands.
+     * 
+     * @param defaultPermissionLevel
+     * The permission level required to call registered commands. Overriden by individual command properties.
+     * 
+     * Defaults to {@link CommandPermissionLevel.GameDirectors}.
+     * 
+     * @param cheatsRequired
+     * Whether commands require cheats to run. Overriden by individual command properties.
+     * 
+     * Defaults to `true`.
+     * 
+     * @param suppressWarnings Whether to suppress duplicate enum warning.
      * 
      * @remarks
      * This should be created in the global scope, and during early execution.
@@ -39,13 +52,14 @@ export class CommandRegister {
      * @throws
      * Throws if multiple instances are created.
      */
-    public constructor(namespace: string, defaultPermissionLevel?: CommandPermissionLevel, cheatsRequired?: boolean) {
+    public constructor(namespace: string, defaultPermissionLevel?: CommandPermissionLevel, cheatsRequired?: boolean, suppressWarnings: boolean = false) {
         // ONLY ONE ALLOWED
         if (instanceCreated) {
             throw new Error("[ERROR] command-wrapper: only one CommandRegister instance can be created!")
         }
         instanceCreated = true
 
+        this.suppressWarnings = suppressWarnings
         this.commandNamespacePrefix = namespace
         this.defaultPermissionLevel = defaultPermissionLevel ?? CommandPermissionLevel.GameDirectors
         this.cheatsRequired = cheatsRequired ?? true
@@ -81,7 +95,9 @@ export class CommandRegister {
                     const namespacedEnumName = this.commandNamespacePrefix + ":" + enumParameter.name
                     const isDuplicateEnum = registeredEnums.has(namespacedEnumName)
                     if (isDuplicateEnum) {
-                        console.warn("command-wrapper: duplicate enum was not registered: " + JSON.stringify(enumParameter) + " \n\tEnsure this is intentional!")
+                        if (!this.suppressWarnings) {
+                            console.warn("command-wrapper: duplicate enum was not registered: " + JSON.stringify(enumParameter) + " \n\tEnsure this is intentional!")
+                        }
                         return
                     }
 
