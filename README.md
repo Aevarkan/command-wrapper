@@ -89,11 +89,13 @@ Now, you can strike yourself with lightning using `/hello:smite @s`.
 
 The `CommandRegister` needs you to define the command prefix, and, optionally, the `defaultPermissionLevel` and whether cheats are required to run them.
 
+You can also tell it to `suppressWarnings` about registering duplicate `Enum` parameters. Errors cannot be suppressed.
+
 > [!IMPORTANT]
 > Don't create more than one `CommandRegister`. Instead, export it as a global constant for your project.
 
 ```typescript
-new CommandRegister(namespace: string, defaultPermissionLevel?: CommandPermissionLevel, cheatsRequired?: boolean)
+new CommandRegister(namespace: string, defaultPermissionLevel?: CommandPermissionLevel, cheatsRequired?: boolean, suppressWarnings?: boolean)
 ```
 
 Individual commands can override the `defaultPermissionLevel` and `cheatsRequired` setting defined here.
@@ -122,6 +124,11 @@ interface CommandParameterEnum {
   values: string[];
 }
 ```
+
+> [!NOTE]
+> Each `Enum` parameter must have a unique name. Multiple registrations are not permitted by the underlying Script API.
+>
+> As the same parameter may be legitimately registered several times for separate commands, doing this will only result in the first `Enum` being used. 
 
 No prefixes are required, they are handled automatically.
 
