@@ -1,3 +1,7 @@
+[![NPM Downloads](https://img.shields.io/npm/d18m/command-wrapper?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/command-wrapper)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Aevarkan/command-wrapper/publish.yml?style=for-the-badge)](https://github.com/Aevarkan/command-wrapper/actions/workflows/publish.yml)
+
+
 # Custom Slash Command Wrapper
 Custom slash commands are complicated additions to your add-ons. Let's fix that.
 
