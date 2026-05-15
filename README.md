@@ -7,6 +7,9 @@ Custom slash commands are complicated additions to your add-ons. Let's fix that.
 
 You can add a custom command in 5 steps using this library. Keep scrolling down to find out how.
 
+> [!TIP]
+> You'll need to bundle this package into your add-on. If you've never done this before, check out [my bundling tutorial](https://wiki.aevarkan.dev/dev/mc-bundling).
+
 ## Quick Example
 
 Obviously, ensure you first import the functions and classes. You'll need to import from `@minecraft/server` too:
